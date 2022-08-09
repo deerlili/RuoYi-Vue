@@ -1,7 +1,9 @@
 <template>
   <div class="login">
     <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form">
-      <h3 class="title">若依后台管理系统</h3>
+      <!-- <h3 class="title">TMS（刀具管理）</h3> -->
+      <h1 class="loginTitle">华域大陆汽车-刀具管理系统</h1>
+      <p class="loginSystem">CHBSC-TMS</p>
       <el-form-item prop="username">
         <el-input
           v-model="loginForm.username"
@@ -37,12 +39,14 @@
           <img :src="codeUrl" @click="getCode" class="login-code-img"/>
         </div>
       </el-form-item>
-      <el-checkbox v-model="loginForm.rememberMe" style="margin:0px 0px 25px 0px;">记住密码</el-checkbox>
+      <!-- <el-checkbox v-model="loginForm.rememberMe" style="margin:0px 0px 25px 0px;">记住密码</el-checkbox>
+       -->
       <el-form-item style="width:100%;">
         <el-button
           :loading="loading"
           size="medium"
-          type="primary"
+          type="success"
+          plain
           style="width:100%;"
           @click.native.prevent="handleLogin"
         >
@@ -56,7 +60,7 @@
     </el-form>
     <!--  底部  -->
     <div class="el-login-footer">
-      <span>Copyright © 2018-2022 ruoyi.vip All Rights Reserved.</span>
+      <span>Copyright © 2018-2022 cqbanshan All Rights Reserved.</span>
     </div>
   </div>
 </template>
@@ -89,7 +93,7 @@ export default {
       },
       loading: false,
       // 验证码开关
-      captchaEnabled: true,
+      captchaEnabled: false,
       // 注册开关
       register: false,
       redirect: undefined
@@ -158,7 +162,7 @@ export default {
 <style rel="stylesheet/scss" lang="scss">
 .login {
   display: flex;
-  justify-content: center;
+  justify-content: right;
   align-items: center;
   height: 100%;
   background-image: url("../assets/images/login-background.jpg");
@@ -169,9 +173,24 @@ export default {
   text-align: center;
   color: #707070;
 }
+.loginTitle {
+      margin-bottom: 10px;
+      font-weight: 300;
+      font-size: 25px;
+      text-align: center;
+      color: #707070;
+    }
+    .loginSystem {
+      font-weight: 300;
+      font-size: 20px;
+      text-align: center;
+      color: rgb(63, 160, 144);
+    }
 
 .login-form {
   border-radius: 6px;
+  margin-right: 11%;
+  margin-top: 6%;
   background: #ffffff;
   width: 400px;
   padding: 25px 25px 5px 25px;
