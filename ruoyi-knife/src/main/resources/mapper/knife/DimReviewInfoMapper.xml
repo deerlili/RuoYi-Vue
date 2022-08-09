@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.knife.mapper.DimReviewInfoMapper">
+    
+    <resultMap type="DimReviewInfo" id="DimReviewInfoResult">
+        <result property="reviewId"    column="review_id"    />
+        <result property="wholeKnifeId"    column="whole_knife_id"    />
+        <result property="knifeHandleDrawId"    column="knife_handle_draw_id"    />
+        <result property="createTime"    column="create_time"    />
+    </resultMap>
+
+    <sql id="selectDimReviewInfoVo">
+        select review_id, whole_knife_id, knife_handle_draw_id, create_time from dim_review_info
+    </sql>
+
+    <select id="selectDimReviewInfoList" parameterType="DimReviewInfo" resultMap="DimReviewInfoResult">
+        <include refid="selectDimReviewInfoVo"/>
+        <where>  
+            <if test="wholeKnifeId != null "> and whole_knife_id = #{wholeKnifeId}</if>
+            <if test="knifeHandleDrawId != null "> and knife_handle_draw_id = #{knifeHandleDrawId}</if>
+        </where>
+    </select>
+    
+    <select id="selectDimReviewInfoByReviewId" parameterType="Long" resultMap="DimReviewInfoResult">
+        <include refid="selectDimReviewInfoVo"/>
+        where review_id = #{reviewId}
+    </select>
+        
+    <insert id="insertDimReviewInfo" parameterType="DimReviewInfo" useGeneratedKeys="true" keyProperty="reviewId">
+        insert into dim_review_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="wholeKnifeId != null">whole_knife_id,</if>
+            <if test="knifeHandleDrawId != null">knife_handle_draw_id,</if>
+            <if test="createTime != null">create_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="wholeKnifeId != null">#{wholeKnifeId},</if>
+            <if test="knifeHandleDrawId != null">#{knifeHandleDrawId},</if>
+            <if test="createTime != null">#{createTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateDimReviewInfo" parameterType="DimReviewInfo">
+        update dim_review_info
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="wholeKnifeId != null">whole_knife_id = #{wholeKnifeId},</if>
+            <if test="knifeHandleDrawId != null">knife_handle_draw_id = #{knifeHandleDrawId},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+        </trim>
+        where review_id = #{reviewId}
+    </update>
+
+    <delete id="deleteDimReviewInfoByReviewId" parameterType="Long">
+        delete from dim_review_info where review_id = #{reviewId}
+    </delete>
+
+    <delete id="deleteDimReviewInfoByReviewIds" parameterType="String">
+        delete from dim_review_info where review_id in 
+        <foreach item="reviewId" collection="array" open="(" separator="," close=")">
+            #{reviewId}
+        </foreach>
+    </delete>
+</mapper>
